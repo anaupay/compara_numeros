@@ -1,0 +1,219 @@
+<!DOCTYPE html>  
+
+
+<html>
+
+<head>
+
+<style>
+
+#simbolo{
+	font-size: 45pt;
+	margin:2pt;
+	width: 70pt;
+	border-radius: 20px;
+	color: black;
+	border-color: red;
+	background-color: yellow;
+	-webkit-box-shadow: 3px 5px 5px black;
+}
+
+#boton{
+	border-color: red;
+	font-size: 30pt;
+	color: black;
+	font-family: serif;
+	height: 60pt;
+	width: 300pt;
+	border-radius: 20px;
+	margin:auto; /* para centrar el boton */
+	display: block; /* para centrar el boton */
+	background-color: yellow;
+	-webkit-box-shadow: 3px 5px 5px black;
+}
+
+#caja {
+  background-color: lightgrey;
+  width: 230px;
+  height: 20px;
+  padding-bottom: 140px;
+  border: 10px solid red;
+  border-radius: 25px;
+  float:left;
+  font-size: 50px;
+  margin: 15px;
+}	
+
+/*  Efecto de borde de boton inicio */
+
+.glow-on-hover {
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .1s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* background: #111;*/
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+/*  fin de efecto de borde de boton */
+
+</style>
+
+<script>
+
+var beeperror = new Audio();
+beeperror.src = "beeperror2.wav";
+
+
+var beepaplauso = new Audio();
+beepaplauso.src = "beepaplauso.wav";
+
+var beepinicio = new Audio();
+beepinicio.src = "beepinicio3.wav";
+
+
+var numeros = [0.4,0.400,0.246,0.2624,7.5,7.50,6.13,1.1,17.176,17.9,6.74,26.2,
+					1.976,29.2,2.64,2.46,222.222,202.2,246.9,23.62,25.52,23.52,
+					0.8263,0.8267,5.97,5.84,3.91,5.36,5.63,4.85,0.0017,0.0018];
+					
+min = 0;
+max = numeros.length-1;
+
+// genera enteros aleatorios desde un número hasta otro
+function aleatorio() {
+  return Math.floor(min + Math.random()*(max + 1 - min))
+}
+
+// var x = Math.floor((Math.random() * 100) + 1)+Math.floor((Math.random() * 100) + 1)/100;
+// var y = Math.floor((Math.random() * 100) + 1)+Math.floor((Math.random() * 100) + 1)/100;
+
+//var x = numeros[aleatorio()];
+//var y = numeros[aleatorio()];
+
+function mayor(x,y) {
+	if (x>y) {
+		beepaplauso.play();
+	}else {
+		beepaplauso.pause();
+		beepaplauso.currentTime = 0;
+		beeperror.play();
+	}
+		
+}
+
+function igual(x,y) {
+	if (x==y) {
+		beepaplauso.play();
+	}else {
+		beepaplauso.pause();
+		beepaplauso.currentTime = 0;
+		beeperror.play();
+	}
+		
+}
+
+function menor(x,y) {
+	if (x<y) {
+		beepaplauso.play();
+	}else {
+		beepaplauso.pause();
+		beepaplauso.currentTime = 0;
+		beeperror.play();
+	}
+		
+}
+
+function empezar() {
+	beepaplauso.pause();
+	beepaplauso.currentTime = 0;
+	beepinicio.play();	
+	x = numeros[aleatorio()];
+	y = numeros[aleatorio()];
+	document.getElementById("num1").innerHTML = x;
+	document.getElementById("num2").innerHTML = y;
+}
+
+</script>
+
+</head>
+
+
+<body onload="empezar()">
+<br><br>
+
+<table align="center" style="border:hidden; text-align: center;">
+<tr>
+<td><div id="caja" ><p id="num1" ></p></div></td>
+<td>  
+<table align="center">
+<tr>
+<td><button class="glow-on-hover" id="simbolo" onclick="menor(x,y)"> < </button></td>
+</tr>
+<tr>
+<td><button class="glow-on-hover" id="simbolo" onclick="igual(x,y)" > = </button></td>
+</tr>
+<tr>
+<td><button class="glow-on-hover" id="simbolo" onclick="mayor(x,y)" > > </button></td>
+</tr>
+</table>
+</td>
+<td><div id="caja" ><p id="num2" ></p></div></td>
+</tr>
+<tr>
+<!-- <td></td> --> 
+<td colspan="3"> <button class="glow-on-hover" id="boton" onclick="empezar()" > Nuevo  ejercicio </button> </td>
+<!-- <td></td> -->
+</tr>
+</table>
+
+</body>
+
+
+</html>
